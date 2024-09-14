@@ -1,6 +1,7 @@
 // app/layout.tsx
-import { fonts } from './fonts'
-import { Providers } from './providers'
+import { fonts } from './fonts';
+import { Providers } from './providers';
+import "./globals.css";
 
 export default function RootLayout({
   children,
