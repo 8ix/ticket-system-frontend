@@ -24,7 +24,10 @@ const CustomTable: React.FC<TableProps> = ({ title, headers, rows, onRowClick })
                     {rows.map((row, rowIndex) => (
                         <Tr 
                             key={rowIndex} 
-                            onClick={() => onRowClick && onRowClick(row)}
+                            onClick={() => {
+                                console.log('Row clicked in Table component:', row);
+                                if (onRowClick) onRowClick(row);
+                            }}
                             _hover={{ bg: "gray.100", cursor: "pointer" }}
                         >
                             {row.map((cell, cellIndex) => (

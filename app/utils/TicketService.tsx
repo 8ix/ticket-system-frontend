@@ -1,33 +1,12 @@
 import axios from 'axios';
-
-export type User = {
-    name: string;
-    email: string;
-};
-
-export type Ticket = {
-    id: number;
-    subject: string;
-    content: string;
-    status: boolean;
-    created_at: string;
-    updated_at: string;
-    user: User;
-};
-
-export type TicketResponse = {
-    data: Ticket[];
-    meta: {
-        total: number;
-    };
-};
+import { TicketResponse, UserTicketsResponse, StatsResponse } from './TicketTypes';
 
 export default class TicketService {
     private static instance: TicketService;
     private baseUrl: string;
 
     private constructor() {
-        this.baseUrl = process.env.NEXT_API_URL || 'http://localhost/api';
+        this.baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost/api';
     }
 
     public static getInstance(): TicketService {
@@ -48,6 +27,31 @@ export default class TicketService {
             return response.data;
         } catch (error) {
             console.error(`Error fetching ${status} tickets:`, error);
+            throw error;
+        }
+    }
+
+    public async getUserTickets(email: string, page: number, perPage: number): Promise<UserTicketsResponse> {
+        try {
+            const response = await axios.get(`${this.baseUrl}/users/${encodeURIComponent(email)}/tickets`, {
+                params: {
+                    per_page: perPage,
+                    page: page,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching user tickets:`, error);
+            throw error;
+        }
+    }
+
+    public async getStats(): Promise<StatsResponse> {
+        try {
+            const response = await axios.get(`${this.baseUrl}/stats`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching stats:', error);
             throw error;
         }
     }

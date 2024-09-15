@@ -10,8 +10,7 @@ const StyledContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    max-width: 1200px;
-    min-width: 800px;
+    min-width: 1000px;
 `;
 
 

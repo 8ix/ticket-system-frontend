@@ -19,15 +19,10 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-size: 0.98em;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
