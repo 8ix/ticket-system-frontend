@@ -1,19 +1,41 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, Box } from '@chakra-ui/react';
 
 type TableProps = {
-    children?: React.ReactNode;
-}
+    title: string;
+    headers: string[];
+    rows: (string | number)[][];
+    onRowClick?: (rowData: (string | number)[]) => void;
+};
 
-
-const Table = (props:TableProps) => {
-
-    return(
-        <div>
-            Table
-            {props.children}
-        </div>
+const CustomTable: React.FC<TableProps> = ({ title, headers, rows, onRowClick }) => {
+    return (
+        <Box overflowX="auto">
+            <Table variant="simple">
+                <TableCaption>{title}</TableCaption>
+                <Thead>
+                    <Tr>
+                        {headers.map((header, index) => (
+                            <Th key={index}>{header}</Th>
+                        ))}
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {rows.map((row, rowIndex) => (
+                        <Tr 
+                            key={rowIndex} 
+                            onClick={() => onRowClick && onRowClick(row)}
+                            _hover={{ bg: "gray.100", cursor: "pointer" }}
+                        >
+                            {row.map((cell, cellIndex) => (
+                                <Td key={cellIndex}>{cell}</Td>
+                            ))}
+                        </Tr>
+                    ))}
+                </Tbody>
+            </Table>
+        </Box>
     );
-}
+};
 
-export default Table;
+export default CustomTable;
